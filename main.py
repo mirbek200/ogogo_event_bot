@@ -84,7 +84,7 @@ def get_data():
         print("No links found in url5.")
 
     with open("events.json", "w") as file:
-        json.dump(new_dict, file, indent=4, ensure_ascii=False)
+        json.dump(new_dict, file, indent=5, ensure_ascii=False)
 
 
 def check_news_update():
