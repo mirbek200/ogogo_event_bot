@@ -14,20 +14,25 @@ dp = Dispatcher(bot)
 
 @dp.message_handler(commands=['start'])
 async def start_command(message: types.Message):
-    async with aiohttp.ClientSession() as session:
-        while True:
-            fresh_news = check_news_update()
+    user_id = message.from_user.id
 
-            if len(fresh_news) >= 1:
-                for k, v in sorted(fresh_news.items()):
-                    news = fresh_news[k]['url']
+    if user_id == 867300800:
+        async with aiohttp.ClientSession() as session:
+            while True:
+                fresh_news = check_news_update()
 
-                    await bot.send_message(user_id, news, disable_notification=True)
+                if len(fresh_news) >= 1:
+                    for k, v in sorted(fresh_news.items()):
+                        news = fresh_news[k]['url']
 
-            else:
-                await bot.send_message(user_id, "Пока нет свежих новостей...", disable_notification=True)
+                        await bot.send_message(user_id, news, disable_notification=True)
 
-            await asyncio.sleep(10800)
+                else:
+                    await bot.send_message(user_id, "Пока нет свежих новостей...", disable_notification=True)
+
+                await asyncio.sleep(10800)
+    else:
+        await bot.send_message(user_id, "Это другой пользователь! Ошибка.", disable_notification=True)
 
 
 if __name__ == '__main__':
